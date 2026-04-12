@@ -10,19 +10,22 @@ export const metadata: Metadata = {
 
 export default function FaqPage() {
   return (
-    <div className="pt-28">
-      <section className="bg-primary py-12 text-primary-foreground">
+    <div className="pt-[calc(2.25rem+73px)]">
+      <section className="bg-gradient-to-br from-primary to-[oklch(0.40_0.14_240)] py-10 text-primary-foreground sm:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <p className="mb-2 text-sm font-medium uppercase tracking-widest text-white/70">
+            Help Center
+          </p>
+          <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
             Frequently Asked Questions
           </h1>
-          <p className="mt-2 text-lg opacity-80">
+          <p className="mt-2 text-base text-white/70 sm:text-lg">
             Find answers to common questions about buying a car at Drive Point Auto
           </p>
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="py-10 sm:py-16">
         <div className="mx-auto max-w-3xl px-4 md:px-6">
           <FaqSection />
         </div>

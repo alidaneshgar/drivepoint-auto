@@ -90,7 +90,7 @@ export default function HomePage() {
             </div>
 
             {/* Right — form */}
-            <div className="rounded-2xl border border-border/60 bg-card p-7 shadow-sm lg:col-span-3">
+            <div className="rounded-2xl border border-border/60 bg-card p-5 shadow-sm sm:p-7 lg:col-span-3">
               <h3 className="mb-5 text-xl font-bold">Send Us a Message</h3>
               <ContactForm />
             </div>

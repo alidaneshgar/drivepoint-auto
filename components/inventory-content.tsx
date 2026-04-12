@@ -315,7 +315,7 @@ export function InventoryContent() {
                 <option value="mileage-desc">Mileage: Highest</option>
               </select>
 
-              <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer whitespace-nowrap">
                 <input
                   type="checkbox"
                   checked={!hideSold}
