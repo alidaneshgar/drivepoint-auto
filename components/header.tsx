@@ -47,7 +47,7 @@ export function Header() {
             {dealership.phone}
           </a>
           <span className="hidden opacity-70 sm:block">
-            Mon-Fri 10-6 &middot; Sat 10-5 &middot; Sun 11-4
+            Mon-Fri 10-18 &middot; Sat 10-17 &middot; Sun 11-16
           </span>
           <Link
             href="/inventory"

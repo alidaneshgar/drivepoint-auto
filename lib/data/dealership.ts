@@ -6,7 +6,7 @@ export const dealership = {
   postalCode: "V3K 1C5",
   country: "CA",
   phone: "(604) 213-2322",
-  email: "info@drivepointauto.com",
+  email: "sales@drivepointauto.ca",
   url: "https://www.drivepointauto.com",
   latitude: 49.23656251166729,
   longitude: -122.87448070238862,
@@ -132,11 +132,11 @@ export const faqItems = [
 ];
 
 export const workingHours = [
-  { day: "Monday", hours: "10:00 AM - 6:00 PM" },
-  { day: "Tuesday", hours: "10:00 AM - 6:00 PM" },
-  { day: "Wednesday", hours: "10:00 AM - 6:00 PM" },
-  { day: "Thursday", hours: "10:00 AM - 6:00 PM" },
-  { day: "Friday", hours: "10:00 AM - 6:00 PM" },
-  { day: "Saturday", hours: "10:00 AM - 5:00 PM" },
-  { day: "Sunday", hours: "11:00 AM - 4:00 PM" },
+  { day: "Mon", hours: "10:00 - 18:00" },
+  { day: "Tue", hours: "10:00 - 18:00" },
+  { day: "Wed", hours: "10:00 - 18:00" },
+  { day: "Thu", hours: "10:00 - 18:00" },
+  { day: "Fri", hours: "10:00 - 18:00" },
+  { day: "Sat", hours: "10:00 - 17:00" },
+  { day: "Sun", hours: "11:00 - 16:00" },
 ];
