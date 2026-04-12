@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { pageMetadata } from "@/lib/data/dealership";
 import { InventoryContent } from "@/components/inventory-content";
 
@@ -23,15 +22,7 @@ export default function InventoryPage() {
         </div>
       </section>
 
-      <Suspense
-        fallback={
-          <div className="py-20 text-center text-muted-foreground">
-            Loading inventory...
-          </div>
-        }
-      >
-        <InventoryContent />
-      </Suspense>
+      <InventoryContent />
     </div>
   );
 }

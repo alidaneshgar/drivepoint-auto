@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Hero } from "@/components/hero";
 import { FeaturedVehicles } from "@/components/featured-vehicles";
 import { WhyChooseUs } from "@/components/why-choose-us";
@@ -25,15 +24,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Vehicles */}
-      <Suspense
-        fallback={
-          <div className="py-20 text-center text-muted-foreground">
-            Loading vehicles...
-          </div>
-        }
-      >
-        <FeaturedVehicles />
-      </Suspense>
+      <FeaturedVehicles />
 
       {/* Why Choose Us */}
       <WhyChooseUs />
