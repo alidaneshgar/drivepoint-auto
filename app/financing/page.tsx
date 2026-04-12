@@ -20,7 +20,7 @@ export default function FinancingPage() {
             Financing
           </h1>
           <p className="mt-2 text-lg opacity-80">
-            Get pre-approved in minutes
+            Flexible options to fit your budget
           </p>
         </div>
       </section>
@@ -43,18 +43,18 @@ export default function FinancingPage() {
                 {[
                   {
                     icon: CheckCircle,
-                    title: "Quick Approval",
-                    desc: "Get a decision in minutes, not days.",
+                    title: "Simple Process",
+                    desc: "We help guide you through every step of the financing process.",
                   },
                   {
                     icon: CreditCard,
-                    title: "All Credit Levels",
-                    desc: "Good credit, bad credit, no credit — we work with everyone.",
+                    title: "Various Credit Situations",
+                    desc: "We work with multiple lenders to explore options for different credit profiles.",
                   },
                   {
                     icon: Calculator,
-                    title: "Competitive Rates",
-                    desc: "We shop multiple lenders to get you the best rate.",
+                    title: "Multiple Lenders",
+                    desc: "We shop different lenders to help find a rate that works for you.",
                   },
                 ].map(({ icon: Icon, title, desc }) => (
                   <div key={title} className="flex items-start gap-4">

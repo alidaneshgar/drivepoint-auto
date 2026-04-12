@@ -31,8 +31,8 @@ export function CtaBanner() {
                 Need Financing?
               </h2>
               <p className="max-w-xl text-lg text-white/70">
-                Get pre-approved in minutes. We work with multiple lenders to
-                find you the best rate, regardless of your credit situation.
+                We work with multiple lenders to help find financing options
+                that fit your budget and situation. Reach out to get started.
               </p>
             </div>
             <Button

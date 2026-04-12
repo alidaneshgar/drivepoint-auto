@@ -216,7 +216,7 @@ export function Hero() {
           {[
             { icon: Shield, text: "Fully Inspected" },
             { icon: DollarSign, text: "Fair Pricing" },
-            { icon: Star, text: "5-Star Reviews" },
+            { icon: Star, text: "Trusted Dealer" },
           ].map(({ icon: Icon, text }) => (
             <div
               key={text}
