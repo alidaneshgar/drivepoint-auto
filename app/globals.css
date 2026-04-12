@@ -4,44 +4,46 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Premium automotive palette */
-  --color-background: oklch(0.985 0.002 240);
-  --color-foreground: oklch(0.13 0.02 260);
+  /*
+   * Drive Point Auto brand palette
+   * Primary blue:  #1A6DB5  — trust, professionalism ("Drive")
+   * Accent orange: #E8521D  — energy, action ("point")
+   * Used as a complementary pair throughout
+   */
+
+  --color-background: oklch(0.985 0.003 250);
+  --color-foreground: oklch(0.15 0.02 250);
   --color-card: oklch(1 0 0);
-  --color-card-foreground: oklch(0.13 0.02 260);
+  --color-card-foreground: oklch(0.15 0.02 250);
   --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.13 0.02 260);
+  --color-popover-foreground: oklch(0.15 0.02 250);
 
-  /* Deep charcoal navy */
-  --color-primary: oklch(0.2 0.03 260);
-  --color-primary-foreground: oklch(0.98 0.005 240);
+  /* Brand blue — headers, nav, footer, primary buttons */
+  --color-primary: oklch(0.47 0.14 245);
+  --color-primary-foreground: oklch(0.99 0.005 0);
 
-  /* Light cool gray */
-  --color-secondary: oklch(0.95 0.005 240);
-  --color-secondary-foreground: oklch(0.2 0.02 260);
+  /* Light gray for sections */
+  --color-secondary: oklch(0.96 0.005 250);
+  --color-secondary-foreground: oklch(0.25 0.02 250);
 
-  /* Subtle muted */
-  --color-muted: oklch(0.955 0.005 240);
-  --color-muted-foreground: oklch(0.42 0.01 260);
+  --color-muted: oklch(0.955 0.005 250);
+  --color-muted-foreground: oklch(0.44 0.01 250);
 
-  /* Vibrant blue accent */
-  --color-accent: oklch(0.58 0.22 260);
-  --color-accent-foreground: oklch(0.98 0.005 240);
+  /* Brand orange — CTAs, highlights, interactive elements */
+  --color-accent: oklch(0.58 0.19 35);
+  --color-accent-foreground: oklch(0.99 0.005 0);
 
   --color-destructive: oklch(0.55 0.2 25);
   --color-destructive-foreground: oklch(0.98 0.005 0);
-  --color-border: oklch(0.91 0.005 240);
-  --color-input: oklch(0.91 0.005 240);
-  --color-ring: oklch(0.58 0.22 260);
+  --color-border: oklch(0.91 0.005 250);
+  --color-input: oklch(0.91 0.005 250);
+  --color-ring: oklch(0.47 0.14 245);
   --radius: 0.625rem;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-fade-in: fade-in 0.5s ease-out;
-  --animate-slide-up: slide-up 0.5s ease-out;
-  --animate-count-up: count-up 2s ease-out;
 }
 
 @keyframes accordion-down {
@@ -52,16 +54,6 @@
 @keyframes accordion-up {
   from { height: var(--radix-accordion-content-height); }
   to { height: 0; }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 @layer base {
@@ -81,12 +73,10 @@
   }
 }
 
-/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -94,9 +84,9 @@ html {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: oklch(0.7 0.01 260);
+  background: oklch(0.72 0.01 250);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.5 0.02 260);
+  background: oklch(0.5 0.02 250);
 }

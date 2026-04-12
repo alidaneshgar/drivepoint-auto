@@ -16,7 +16,7 @@ export function CtaBanner() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent via-[oklch(0.50_0.24_265)] to-primary p-10 sm:p-14"
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-[oklch(0.42_0.15_240)] to-[oklch(0.35_0.12_250)] p-10 sm:p-14"
         >
           {/* Decorative circles */}
           <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/5" />

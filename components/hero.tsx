@@ -210,7 +210,7 @@ export function Hero() {
         />
       </div>
 
-      {/* Trust badges bar below the image */}
+      {/* Trust badges bar below the image — brand blue bg, orange icons */}
       <div className="bg-primary">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-6 px-4 py-4 sm:gap-10 sm:py-5 md:px-6">
           {[
@@ -220,7 +220,7 @@ export function Hero() {
           ].map(({ icon: Icon, text }) => (
             <div
               key={text}
-              className="flex items-center gap-2 text-sm text-primary-foreground/70"
+              className="flex items-center gap-2 text-sm text-white/80"
             >
               <Icon className="h-4 w-4 text-accent" />
               <span>{text}</span>

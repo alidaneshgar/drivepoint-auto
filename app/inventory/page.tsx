@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function InventoryPage() {
   return (
     <div className="pt-[calc(2.25rem+73px)]">
-      <section className="bg-gradient-to-br from-primary to-[oklch(0.22_0.04_255)] py-14 text-primary-foreground sm:py-16">
+      <section className="bg-gradient-to-br from-primary to-[oklch(0.40_0.14_240)] py-14 text-primary-foreground sm:py-16">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <p className="mb-2 text-sm font-medium uppercase tracking-widest text-accent-foreground/70">
             Browse &amp; Find

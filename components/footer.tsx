@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { dealership, workingHours } from "@/lib/data/dealership";
 
@@ -12,11 +13,14 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:pr-8">
-            <div className="mb-4 flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-sm font-bold">
-                DP
-              </div>
-              <span className="text-lg font-bold">{dealership.name}</span>
+            <div className="mb-4">
+              <Image
+                src="/images/logo.png"
+                alt="Drive Point Auto"
+                width={160}
+                height={44}
+                className="h-11 w-auto brightness-0 invert"
+              />
             </div>
             <p className="text-sm leading-relaxed text-white/60">
               Your trusted destination for quality pre-owned vehicles in Metro
