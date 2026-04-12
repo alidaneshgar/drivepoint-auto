@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Gauge, Fuel, Settings2 } from "lucide-react";
 import { numberWithCommas, vehicleSlug } from "@/lib/utils";
 import type { Vehicle } from "@/lib/types/vehicle";
 
@@ -13,50 +13,78 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
 
   return (
     <Link href={`/inventory/${slug}`} className="group block">
-      <Card className="overflow-hidden transition-shadow hover:shadow-lg">
+      <div className="overflow-hidden rounded-2xl border border-border/60 bg-card transition-all duration-300 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5 hover:-translate-y-1">
+        {/* Image */}
         <div className="relative aspect-[16/10] overflow-hidden bg-muted">
           <Image
             src={imageUrl}
             alt={`${title} ${vehicle.trim || ""}`}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+          {/* Badges */}
           {vehicle.websiteBadge && (
-            <Badge className="absolute left-3 top-3">{vehicle.websiteBadge}</Badge>
+            <Badge className="absolute left-3 top-3 rounded-lg bg-accent shadow-md">
+              {vehicle.websiteBadge}
+            </Badge>
           )}
           {vehicle.sold && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-              <span className="text-2xl font-bold text-white">SOLD</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+              <span className="rounded-xl bg-white/10 px-6 py-2 text-xl font-bold text-white backdrop-blur-sm">
+                SOLD
+              </span>
             </div>
           )}
           {!vehicle.sold && !vehicle.floor && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-              <span className="text-xl font-bold text-white">COMING SOON</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+              <span className="rounded-xl bg-white/10 px-5 py-2 text-lg font-bold text-white backdrop-blur-sm">
+                COMING SOON
+              </span>
+            </div>
+          )}
+
+          {/* Price tag */}
+          {!vehicle.sold && vehicle.floor && (
+            <div className="absolute bottom-3 right-3 rounded-lg bg-white/95 px-3 py-1.5 text-lg font-bold text-foreground shadow-lg backdrop-blur-sm">
+              ${numberWithCommas(vehicle.askingPrice)}
             </div>
           )}
         </div>
-        <CardContent className="p-4">
-          <h3 className="mb-1 text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
+
+        {/* Info */}
+        <div className="p-4">
+          <h3 className="mb-0.5 text-lg font-bold text-foreground transition-colors group-hover:text-accent">
             {title}
           </h3>
           {vehicle.trim && (
-            <p className="mb-2 text-sm text-muted-foreground">{vehicle.trim}</p>
+            <p className="mb-3 text-sm text-muted-foreground">{vehicle.trim}</p>
           )}
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-muted-foreground">
+
+          {/* Specs pills */}
+          <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1 rounded-md bg-muted/70 px-2 py-1">
+              <Gauge className="h-3 w-3" />
               {numberWithCommas(vehicle.mileage)} km
-            </div>
-            <div className="text-lg font-bold text-foreground">
-              {vehicle.sold
-                ? "SOLD"
-                : !vehicle.floor
-                  ? "Coming Soon"
-                  : `$${numberWithCommas(vehicle.askingPrice)}`}
-            </div>
+            </span>
+            {vehicle.transmissionType && (
+              <span className="inline-flex items-center gap-1 rounded-md bg-muted/70 px-2 py-1">
+                <Settings2 className="h-3 w-3" />
+                {vehicle.transmissionType}
+              </span>
+            )}
+            {vehicle.fuelType && (
+              <span className="inline-flex items-center gap-1 rounded-md bg-muted/70 px-2 py-1">
+                <Fuel className="h-3 w-3" />
+                {vehicle.fuelType}
+              </span>
+            )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </Link>
   );
 }

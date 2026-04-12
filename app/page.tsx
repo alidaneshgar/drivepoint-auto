@@ -1,47 +1,98 @@
 import { Hero } from "@/components/hero";
+import { StatsCounter } from "@/components/stats-counter";
 import { FeaturedVehicles } from "@/components/featured-vehicles";
 import { WhyChooseUs } from "@/components/why-choose-us";
+import { Testimonials } from "@/components/testimonials";
+import { CtaBanner } from "@/components/cta-banner";
 import { ContactForm } from "@/components/contact-form";
-import { welcomeMessage } from "@/lib/data/dealership";
+import { dealership } from "@/lib/data/dealership";
+import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-
-      {/* Welcome */}
-      <section className="py-20">
-        <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
-          <h2 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl">
-            Welcome to Drive Point Auto
-          </h2>
-          <div className="space-y-4 text-lg leading-relaxed text-muted-foreground">
-            {welcomeMessage.split("\n").map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Vehicles */}
+      <StatsCounter />
       <FeaturedVehicles />
-
-      {/* Why Choose Us */}
       <WhyChooseUs />
+      <CtaBanner />
+      <Testimonials />
 
-      {/* Contact CTA */}
-      <section className="py-20">
-        <div className="mx-auto max-w-2xl px-4 md:px-6">
-          <div className="mb-10 text-center">
-            <h2 className="mb-3 text-3xl font-bold tracking-tight sm:text-4xl">
-              Get In Touch
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Have a question about a vehicle? Want to schedule a test drive?
-              We&apos;d love to hear from you.
-            </p>
+      {/* Contact section */}
+      <section className="bg-muted/30 py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <div className="grid gap-12 lg:grid-cols-5">
+            {/* Left — info */}
+            <div className="lg:col-span-2">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-accent">
+                Get In Touch
+              </p>
+              <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+                Ready to Find Your Next Car?
+              </h2>
+              <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
+                Visit us, call us, or send a message. Our team is here to help
+                you find the perfect vehicle.
+              </p>
+
+              <div className="space-y-5">
+                <a
+                  href={`tel:${dealership.phone.replace(/[^+\d]/g, "")}`}
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+                    <Phone className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Call us</p>
+                    <p className="font-semibold">{dealership.phone}</p>
+                  </div>
+                </a>
+
+                <a
+                  href={`mailto:${dealership.email}`}
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+                    <Mail className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Email us</p>
+                    <p className="font-semibold">{dealership.email}</p>
+                  </div>
+                </a>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                    <MapPin className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Visit us</p>
+                    <p className="font-semibold">
+                      {dealership.address}, {dealership.city}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <Button asChild variant="outline" className="rounded-xl">
+                  <Link href="/contact">
+                    View Full Contact Page
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Right — form */}
+            <div className="rounded-2xl border border-border/60 bg-card p-7 shadow-sm lg:col-span-3">
+              <h3 className="mb-5 text-xl font-bold">Send Us a Message</h3>
+              <ContactForm />
+            </div>
           </div>
-          <ContactForm />
         </div>
       </section>
     </>

@@ -10,14 +10,18 @@ export const metadata: Metadata = {
 
 export default function InventoryPage() {
   return (
-    <div className="pt-28">
-      <section className="bg-primary py-12 text-primary-foreground">
+    <div className="pt-[calc(2.25rem+73px)]">
+      <section className="bg-gradient-to-br from-primary to-[oklch(0.22_0.04_255)] py-14 text-primary-foreground sm:py-16">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <p className="mb-2 text-sm font-medium uppercase tracking-widest text-accent-foreground/70">
+            Browse &amp; Find
+          </p>
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
             Our Inventory
           </h1>
-          <p className="mt-2 text-lg opacity-80">
-            Browse our quality pre-owned vehicles
+          <p className="mt-3 max-w-xl text-lg text-white/70">
+            Quality pre-owned vehicles, inspected and priced fairly.
+            Find your next car below.
           </p>
         </div>
       </section>
