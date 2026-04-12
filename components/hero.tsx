@@ -1,62 +1,112 @@
 "use client";
 
-import { useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Shield,
   Star,
   DollarSign,
-  Search,
+  ChevronLeft,
+  ChevronRight,
   ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const SLIDE_COUNT = 23;
+const SLIDE_INTERVAL = 5000;
+
+const slides = Array.from({ length: SLIDE_COUNT }, (_, i) => ({
+  src: `/images/slides/slide-${i + 1}.jpg`,
+  alt: `Quality vehicle ${i + 1}`,
+}));
+
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const goTo = useCallback((index: number) => {
+    setCurrent(index);
+    setProgress(0);
+  }, []);
+
+  const next = useCallback(() => {
+    setCurrent((c) => (c + 1) % SLIDE_COUNT);
+    setProgress(0);
+  }, []);
+
+  const prev = useCallback(() => {
+    setCurrent((c) => (c - 1 + SLIDE_COUNT) % SLIDE_COUNT);
+    setProgress(0);
+  }, []);
+
+  // Auto-advance
+  useEffect(() => {
+    if (isPaused) return;
+    timerRef.current = setInterval(next, SLIDE_INTERVAL);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isPaused, next]);
+
+  // Progress bar animation
+  useEffect(() => {
+    if (isPaused) return;
+    setProgress(0);
+    const step = 100 / (SLIDE_INTERVAL / 30);
+    progressRef.current = setInterval(() => {
+      setProgress((p) => Math.min(p + step, 100));
+    }, 30);
+    return () => {
+      if (progressRef.current) clearInterval(progressRef.current);
+    };
+  }, [current, isPaused]);
 
   return (
     <section
-      ref={ref}
-      className="relative flex min-h-screen items-center overflow-hidden bg-primary"
+      className="relative h-screen min-h-[600px] max-h-[1000px] overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Animated gradient background */}
-      <motion.div
-        style={{ y: bgY }}
-        className="absolute inset-0"
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-[oklch(0.22_0.04_255)] to-[oklch(0.18_0.06_270)]" />
-        {/* Radial glow */}
-        <div className="absolute right-0 top-1/4 h-[600px] w-[600px] rounded-full bg-accent/10 blur-[120px]" />
-        <div className="absolute -left-32 bottom-0 h-[400px] w-[400px] rounded-full bg-accent/5 blur-[100px]" />
-      </motion.div>
+      {/* Slides */}
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={slides[current].src}
+            alt={slides[current].alt}
+            fill
+            className="object-cover"
+            priority={current < 3}
+            sizes="100vw"
+            quality={85}
+          />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Grid pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.4) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
+      {/* Dark overlay with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
       {/* Content */}
-      <motion.div style={{ opacity }} className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-32 md:px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Left — text */}
-          <div>
+      <div className="relative flex h-full items-center">
+        <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
+          <div className="max-w-2xl">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
               className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-white/80 backdrop-blur-sm"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
@@ -66,12 +116,12 @@ export function Hero() {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="mb-6 text-4xl font-extrabold leading-[1.1] text-white sm:text-5xl lg:text-6xl xl:text-7xl"
+              transition={{ delay: 0.3, duration: 0.7 }}
+              className="mb-6 text-4xl font-extrabold leading-[1.08] text-white drop-shadow-lg sm:text-5xl lg:text-6xl xl:text-7xl"
             >
               Find Your
               <br />
-              <span className="bg-gradient-to-r from-white via-blue-200 to-accent-foreground bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-blue-200 to-blue-300 bg-clip-text text-transparent">
                 Perfect Ride
               </span>
             </motion.h1>
@@ -79,8 +129,8 @@ export function Hero() {
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="mb-8 max-w-lg text-lg leading-relaxed text-white/70 sm:text-xl"
+              transition={{ delay: 0.4, duration: 0.7 }}
+              className="mb-8 max-w-lg text-lg leading-relaxed text-white/75 sm:text-xl"
             >
               Quality pre-owned vehicles, hand-picked and fully inspected.
               Fair pricing, honest service, zero pressure.
@@ -89,13 +139,13 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
               className="flex flex-col gap-3 sm:flex-row"
             >
               <Button
                 asChild
                 size="lg"
-                className="h-12 rounded-xl bg-accent px-7 text-base font-semibold shadow-lg shadow-accent/30 hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/40 transition-all duration-300"
+                className="h-13 rounded-xl bg-accent px-8 text-base font-semibold shadow-lg shadow-accent/30 hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/40 transition-all duration-300"
               >
                 <Link href="/inventory">
                   Browse Inventory
@@ -106,107 +156,103 @@ export function Hero() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-xl border-white/20 bg-white/5 px-7 text-base font-semibold text-white backdrop-blur-sm hover:bg-white/10 hover:border-white/30 transition-all duration-300"
+                className="h-13 rounded-xl border-white/25 bg-white/5 px-8 text-base font-semibold text-white backdrop-blur-sm hover:bg-white/15 hover:border-white/40 transition-all duration-300"
               >
                 <Link href="/contact">Schedule Test Drive</Link>
               </Button>
             </motion.div>
-          </div>
-
-          {/* Right — search card + stats */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 0.7 }}
-            className="hidden lg:block"
-          >
-            {/* Quick search card */}
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-md">
-              <h2 className="mb-5 text-lg font-semibold text-white">
-                <Search className="mr-2 inline h-5 w-5 text-accent" />
-                Quick Search
-              </h2>
-              <div className="space-y-3">
-                <Link
-                  href="/inventory"
-                  className="flex items-center justify-between rounded-xl bg-white/10 px-4 py-3.5 text-sm text-white/80 transition-all hover:bg-white/15 hover:text-white"
-                >
-                  <span>View All Vehicles</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/financing"
-                  className="flex items-center justify-between rounded-xl bg-white/10 px-4 py-3.5 text-sm text-white/80 transition-all hover:bg-white/15 hover:text-white"
-                >
-                  <span>Get Pre-Approved</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="flex items-center justify-between rounded-xl bg-white/10 px-4 py-3.5 text-sm text-white/80 transition-all hover:bg-white/15 hover:text-white"
-                >
-                  <span>Book a Test Drive</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
 
             {/* Trust badges */}
-            <div className="mt-6 grid grid-cols-3 gap-3">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="mt-12 flex flex-wrap gap-6"
+            >
               {[
-                { icon: Shield, label: "Fully Inspected", value: "100%" },
-                { icon: DollarSign, label: "Fair Pricing", value: "Best Value" },
-                { icon: Star, label: "Customer Rating", value: "5.0" },
-              ].map(({ icon: Icon, label, value }) => (
+                { icon: Shield, text: "Fully Inspected" },
+                { icon: DollarSign, text: "Fair Pricing" },
+                { icon: Star, text: "5-Star Reviews" },
+              ].map(({ icon: Icon, text }) => (
                 <div
-                  key={label}
-                  className="rounded-xl border border-white/10 bg-white/5 p-4 text-center backdrop-blur-sm"
+                  key={text}
+                  className="flex items-center gap-2 text-sm text-white/55"
                 >
-                  <Icon className="mx-auto mb-2 h-5 w-5 text-accent" />
-                  <div className="text-lg font-bold text-white">{value}</div>
-                  <div className="text-[11px] text-white/50">{label}</div>
+                  <Icon className="h-4 w-4 text-accent/80" />
+                  <span>{text}</span>
                 </div>
               ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Nav arrows */}
+      <button
+        onClick={prev}
+        className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/20 p-3 text-white/60 backdrop-blur-sm transition-all hover:bg-black/40 hover:text-white md:left-6"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/20 p-3 text-white/60 backdrop-blur-sm transition-all hover:bg-black/40 hover:text-white md:right-6"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+
+      {/* Bottom bar: dots + progress */}
+      <div className="absolute bottom-0 left-0 right-0 z-10">
+        {/* Slide indicators */}
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 pb-8 md:px-6">
+          {/* Dot indicators - show groups on mobile */}
+          <div className="flex items-center gap-1.5">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === current
+                    ? "w-8 bg-accent"
+                    : "w-1.5 bg-white/30 hover:bg-white/50"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Slide counter */}
+          <div className="text-xs tabular-nums text-white/40">
+            <span className="text-white/80 font-medium">{String(current + 1).padStart(2, "0")}</span>
+            {" / "}
+            {String(SLIDE_COUNT).padStart(2, "0")}
+          </div>
         </div>
 
-        {/* Mobile trust badges */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="mt-12 flex flex-wrap justify-center gap-6 lg:hidden"
-        >
-          {[
-            { icon: Shield, text: "Fully Inspected" },
-            { icon: DollarSign, text: "Fair Pricing" },
-            { icon: Star, text: "5-Star Reviews" },
-          ].map(({ icon: Icon, text }) => (
-            <div
-              key={text}
-              className="flex items-center gap-2 text-sm text-white/60"
-            >
-              <Icon className="h-4 w-4 text-accent/80" />
-              <span>{text}</span>
-            </div>
-          ))}
-        </motion.div>
-      </motion.div>
+        {/* Progress bar */}
+        <div className="h-[3px] bg-white/10">
+          <div
+            className="h-full bg-accent transition-none"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-20 left-1/2 z-10 -translate-x-1/2 hidden md:block"
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
+          animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-1 text-white/30"
+          className="flex flex-col items-center gap-1 text-white/25"
         >
-          <span className="text-[10px] uppercase tracking-widest">Scroll</span>
+          <span className="text-[10px] uppercase tracking-[0.2em]">Scroll</span>
           <ChevronDown className="h-4 w-4" />
         </motion.div>
       </motion.div>
