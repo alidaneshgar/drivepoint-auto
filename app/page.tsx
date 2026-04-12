@@ -2,7 +2,7 @@ import { Hero } from "@/components/hero";
 import { StatsCounter } from "@/components/stats-counter";
 import { FeaturedVehicles } from "@/components/featured-vehicles";
 import { WhyChooseUs } from "@/components/why-choose-us";
-import { Testimonials } from "@/components/testimonials";
+import { GoogleReviews } from "@/components/google-reviews";
 import { CtaBanner } from "@/components/cta-banner";
 import { ContactForm } from "@/components/contact-form";
 import { dealership } from "@/lib/data/dealership";
@@ -18,7 +18,7 @@ export default function HomePage() {
       <FeaturedVehicles />
       <WhyChooseUs />
       <CtaBanner />
-      <Testimonials />
+      <GoogleReviews />
 
       {/* Contact section */}
       <section className="bg-muted/30 py-20 sm:py-24">
@@ -34,7 +34,7 @@ export default function HomePage() {
               </h2>
               <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
                 Visit us, call us, or send a message. Our team is here to help
-                you find the perfect vehicle.
+                you find the right vehicle.
               </p>
 
               <div className="space-y-5">
@@ -94,6 +94,18 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Google Map */}
+      <section className="h-[350px] w-full sm:h-[400px]">
+        <iframe
+          title="Drive Point Auto Location"
+          src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(`${dealership.name}, ${dealership.address}, ${dealership.city}, ${dealership.province} ${dealership.postalCode}`)}`}
+          className="h-full w-full border-0"
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
       </section>
     </div>
   );
