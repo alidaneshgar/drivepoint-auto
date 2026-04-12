@@ -21,8 +21,6 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
-
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -34,8 +32,7 @@ export function Header() {
     setIsOpen(false);
   }, [pathname]);
 
-  // On homepage, header starts transparent over the hero
-  const showSolid = scrolled || !isHome;
+  const showSolid = true; // Always solid — hero is below the header
   const textColor = showSolid ? "text-foreground" : "text-white";
   const logoColor = showSolid ? "text-foreground" : "text-white";
 

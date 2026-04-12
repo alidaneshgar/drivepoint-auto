@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   return (
-    <>
+    <div className="pt-[calc(2.25rem+73px)]">
       <Hero />
       <StatsCounter />
       <FeaturedVehicles />
@@ -95,6 +95,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
