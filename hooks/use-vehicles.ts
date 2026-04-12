@@ -34,7 +34,11 @@ export function useFloorVehicles() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_URL}/vehicles/withFirstPicture/floor`)
+    fetch(`${API_URL}/vehicles/inventorySearch`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    })
       .then((res) => {
         if (!res.ok) throw new Error(`API returned ${res.status}`);
         return res.json();

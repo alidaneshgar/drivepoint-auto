@@ -24,6 +24,7 @@ export interface Vehicle {
   vehiclePictures: string[];
   websiteBadge: string;
   badgeColor: string;
+  floorDate: string;
   adSettings: Record<string, unknown>;
   adBodyText: string;
 }

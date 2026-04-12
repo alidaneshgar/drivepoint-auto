@@ -12,15 +12,16 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
     vehicle.vehiclePictures?.[0] || "/images/car-placeholder.jpg";
 
   return (
-    <Link href={`/inventory/${slug}`} className="group block">
-      <div className="overflow-hidden rounded-2xl border border-border/60 bg-card transition-all duration-300 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5 hover:-translate-y-1">
+    <Link href={`/inventory/${slug}`} className="group block h-full">
+      <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-all duration-300 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5 hover:-translate-y-1">
         {/* Image */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+        <div className="relative overflow-hidden bg-muted">
           <Image
             src={imageUrl}
             alt={`${title} ${vehicle.trim || ""}`}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            width={800}
+            height={600}
+            className="w-full h-auto"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           {/* Gradient overlay */}
@@ -56,16 +57,16 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         </div>
 
         {/* Info */}
-        <div className="p-4">
+        <div className="flex flex-1 flex-col p-4">
           <h3 className="mb-0.5 text-lg font-bold text-foreground transition-colors group-hover:text-accent">
             {title}
           </h3>
-          {vehicle.trim && (
-            <p className="mb-3 text-sm text-muted-foreground">{vehicle.trim}</p>
-          )}
+          <p className="mb-3 min-h-[1.25rem] text-sm text-muted-foreground">
+            {vehicle.trim || "\u00A0"}
+          </p>
 
           {/* Specs pills */}
-          <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+          <div className="mt-auto flex flex-wrap gap-2 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1 rounded-md bg-muted/70 px-2 py-1">
               <Gauge className="h-3 w-3" />
               {numberWithCommas(vehicle.mileage)} km

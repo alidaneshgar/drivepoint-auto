@@ -1,6 +1,7 @@
 import { Hero } from "@/components/hero";
 import { StatsCounter } from "@/components/stats-counter";
 import { FeaturedVehicles } from "@/components/featured-vehicles";
+import { RecentVehicles } from "@/components/recent-vehicles";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { GoogleReviews } from "@/components/google-reviews";
 import { CtaBanner } from "@/components/cta-banner";
@@ -15,6 +16,7 @@ export default function HomePage() {
     <div className="pt-[calc(2.25rem+73px)]">
       <Hero />
       <StatsCounter />
+      <RecentVehicles />
       <FeaturedVehicles />
       <WhyChooseUs />
       <CtaBanner />

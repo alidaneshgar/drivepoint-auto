@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/inventory", label: "Inventory" },
   { href: "/about", label: "About" },
   { href: "/financing", label: "Financing" },
+  { href: "/credit-application", label: "Apply for Finance" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];

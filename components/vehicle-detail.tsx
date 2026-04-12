@@ -384,12 +384,13 @@ export function VehicleDetail({ slug }: { slug: string }) {
             {/* Main image */}
             {pics.length > 0 ? (
               <div className="space-y-3">
-                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
+                <div className="relative overflow-hidden rounded-2xl bg-muted">
                   <Image
                     src={pics[selectedImage]}
                     alt={`${title} - photo ${selectedImage + 1}`}
-                    fill
-                    className="object-cover"
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto"
                     priority
                     sizes="(max-width: 1024px) 100vw, 66vw"
                   />
