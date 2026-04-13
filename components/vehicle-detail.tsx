@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import useEmblaCarousel from "embla-carousel-react";
 import {
   ArrowLeft,
   Phone,
@@ -106,8 +107,26 @@ export function VehicleDetail({ slug }: { slug: string }) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [showRequestInfo, setShowRequestInfo] = useState(false);
   const [showShare, setShowShare] = useState(false);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, dragFree: false });
+
+  const onEmblaSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedImage(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("select", onEmblaSelect);
+    return () => { emblaApi.off("select", onEmblaSelect); };
+  }, [emblaApi, onEmblaSelect]);
+
+  const scrollToImage = useCallback(
+    (index: number) => {
+      setSelectedImage(index);
+      emblaApi?.scrollTo(index);
+    },
+    [emblaApi]
+  );
 
   useEffect(() => {
     const vin = vinFromSlug(slug);
@@ -354,41 +373,38 @@ export function VehicleDetail({ slug }: { slug: string }) {
           <div className="min-w-0 lg:col-span-2">
             {pics.length > 0 ? (
               <div className="space-y-2 overflow-hidden sm:space-y-3">
-                {/* Main image — constrained height on mobile */}
-                <div
-                  className="relative overflow-hidden rounded-xl bg-muted sm:rounded-2xl"
-                  onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
-                  onTouchMove={(e) => { touchEndX.current = e.touches[0].clientX; }}
-                  onTouchEnd={() => {
-                    const diff = touchStartX.current - touchEndX.current;
-                    if (Math.abs(diff) > 50) {
-                      if (diff > 0 && selectedImage < pics.length - 1) setSelectedImage(selectedImage + 1);
-                      if (diff < 0 && selectedImage > 0) setSelectedImage(selectedImage - 1);
-                    }
-                  }}
-                >
-                  <Image
-                    src={pics[selectedImage]}
-                    alt={`${title} - photo ${selectedImage + 1}`}
-                    width={1200}
-                    height={800}
-                    className="w-full h-auto max-h-[50vh] object-contain sm:max-h-none"
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 66vw"
-                  />
+                {/* Swipeable image carousel */}
+                <div className="relative rounded-xl bg-muted sm:rounded-2xl">
+                  <div ref={emblaRef} className="overflow-hidden rounded-xl sm:rounded-2xl">
+                    <div className="flex">
+                      {pics.map((pic, i) => (
+                        <div key={i} className="min-w-0 flex-[0_0_100%]">
+                          <Image
+                            src={pic}
+                            alt={`${title} - photo ${i + 1}`}
+                            width={1200}
+                            height={800}
+                            className="w-full h-auto max-h-[50vh] object-contain sm:max-h-none"
+                            priority={i === 0}
+                            sizes="(max-width: 1024px) 100vw, 66vw"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   {vehicle.websiteBadge && (
-                    <Badge className="absolute left-3 top-3 bg-accent text-xs shadow-md sm:left-4 sm:top-4 sm:text-sm">
+                    <Badge className="absolute left-3 top-3 z-10 bg-accent text-xs shadow-md sm:left-4 sm:top-4 sm:text-sm">
                       {vehicle.websiteBadge}
                     </Badge>
                   )}
                   {vehicle.sold && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-xl sm:rounded-2xl">
                       <span className="rounded-xl bg-white/10 px-6 py-2 text-lg font-bold text-white backdrop-blur-sm sm:px-8 sm:py-3 sm:text-2xl">
                         SOLD
                       </span>
                     </div>
                   )}
-                  <div className="absolute bottom-2 right-2 rounded-md bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm sm:bottom-3 sm:right-3 sm:rounded-lg sm:px-2.5 sm:py-1 sm:text-xs">
+                  <div className="absolute bottom-2 right-2 z-10 rounded-md bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm sm:bottom-3 sm:right-3 sm:rounded-lg sm:px-2.5 sm:py-1 sm:text-xs">
                     {selectedImage + 1} / {pics.length}
                   </div>
                 </div>
@@ -399,7 +415,7 @@ export function VehicleDetail({ slug }: { slug: string }) {
                     {pics.map((pic, i) => (
                       <button
                         key={i}
-                        onClick={() => setSelectedImage(i)}
+                        onClick={() => scrollToImage(i)}
                         className={`relative h-12 w-16 shrink-0 overflow-hidden rounded-md sm:h-16 sm:w-20 lg:h-20 lg:w-24 lg:rounded-lg ${
                           i === selectedImage
                             ? "ring-2 ring-accent ring-offset-1 sm:ring-offset-2"
