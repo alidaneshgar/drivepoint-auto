@@ -46,13 +46,19 @@ export function FinancingCalculator({
     paymentsCount: number;
   } | null>(null);
 
-  const handleCalculate = () => {
+  const [error, setError] = useState("");
+
+  const handleCalculate = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setError("");
     const p = parseFloat(price);
     const d = parseFloat(downPayment) || 0;
     const r = parseFloat(rate);
     const t = parseFloat(term);
     const f = parseFloat(frequency);
-    if (!p || !r || !t) return;
+    if (!p) { setError("Please enter the cost of vehicle"); return; }
+    if (!r) { setError("Please enter the interest rate"); return; }
+    if (!t) { setError("Please enter the loan term"); return; }
     setResult(calculatePayment(p, d, r, t, f));
   };
 
@@ -112,7 +118,11 @@ export function FinancingCalculator({
             <option value="0.25">Weekly</option>
           </select>
         </div>
+        {error && (
+          <p className="text-xs text-destructive">{error}</p>
+        )}
         <Button
+          type="button"
           onClick={handleCalculate}
           className="w-full bg-accent hover:bg-accent/90"
         >
