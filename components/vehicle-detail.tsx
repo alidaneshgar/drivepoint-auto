@@ -515,12 +515,6 @@ export function VehicleDetail({ slug }: { slug: string }) {
                   Call {dealership.phone}
                 </a>
               </Button>
-              <Button asChild variant="outline" className="w-full rounded-xl h-11">
-                <Link href="/contact">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Send Inquiry
-                </Link>
-              </Button>
             </div>
 
             {/* Rent */}
