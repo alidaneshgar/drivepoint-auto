@@ -190,14 +190,6 @@ export function Hero() {
                 />
               ))}
             </div>
-            {/* Counter — always visible */}
-            <div className="ml-auto text-[10px] tabular-nums text-white/40 sm:text-xs">
-              <span className="font-medium text-white/80">
-                {String(current + 1).padStart(2, "0")}
-              </span>
-              {" / "}
-              {String(SLIDE_COUNT).padStart(2, "0")}
-            </div>
           </div>
         </div>
       </div>
