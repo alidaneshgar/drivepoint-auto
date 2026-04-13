@@ -9,7 +9,7 @@ export async function getVehiclesServer(): Promise<Vehicle[]> {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
-      next: { revalidate: 300 },
+      cache: "no-store",
     });
     if (!res.ok) return [];
     return res.json();

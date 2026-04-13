@@ -1,9 +1,14 @@
 import type { MetadataRoute } from "next";
-import { getVehiclesServer } from "@/lib/api/vehicles-server";
 import { vehicleSlug } from "@/lib/utils";
+import type { Vehicle } from "@/lib/types/vehicle";
+
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://dms.sysandgo.com/api";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.drivepointauto.com";
+
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
@@ -18,7 +23,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const vehicles = await getVehiclesServer();
+    const res = await fetch(`${API_URL}/vehicles/inventorySearch`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
+    if (!res.ok) return staticPages;
+    const vehicles: Vehicle[] = await res.json();
     const vehiclePages: MetadataRoute.Sitemap = vehicles
       .filter((v) => v.floor)
       .map((v) => ({

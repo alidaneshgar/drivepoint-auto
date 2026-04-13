@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageMetadata } from "@/lib/data/dealership";
+import { Suspense } from "react";
 import { InventoryContent } from "@/components/inventory-content";
 
 export const metadata: Metadata = {
@@ -22,7 +22,9 @@ export default function InventoryPage() {
         </div>
       </section>
 
-      <InventoryContent />
+      <Suspense>
+        <InventoryContent />
+      </Suspense>
     </div>
   );
 }
