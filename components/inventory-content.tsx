@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { Loader2, Search, X, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,10 +49,12 @@ const selectClass =
 
 export function InventoryContent() {
   const { vehicles, loading, error } = useVehicles();
+  const searchParams = useSearchParams();
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<SortKey>("recently-arrived");
-  const [filterYear, setFilterYear] = useState("");
-  const [filterMake, setFilterMake] = useState("");
+  const [filterYear, setFilterYear] = useState(searchParams.get("year") || "");
+  const [filterMake, setFilterMake] = useState(searchParams.get("make") || "");
+  const [filterModel, setFilterModel] = useState(searchParams.get("model") || "");
   const [filterBody, setFilterBody] = useState("");
   const [filterMileage, setFilterMileage] = useState("");
   const [filterTransmission, setFilterTransmission] = useState("");
@@ -70,6 +73,15 @@ export function InventoryContent() {
       [...new Set(vehicles.map((v) => v.makeName).filter(Boolean))].sort(),
     [vehicles]
   );
+  const uniqueModels = useMemo(
+    () => {
+      const filtered = filterMake
+        ? vehicles.filter((v) => v.makeName === filterMake)
+        : vehicles;
+      return [...new Set(filtered.map((v) => v.modelName).filter(Boolean))].sort();
+    },
+    [vehicles, filterMake]
+  );
   const uniqueBodies = useMemo(
     () =>
       [...new Set(vehicles.map((v) => v.bodyType).filter(Boolean))].sort(),
@@ -87,6 +99,7 @@ export function InventoryContent() {
     search ||
     filterYear ||
     filterMake ||
+    filterModel ||
     filterBody ||
     filterMileage ||
     filterTransmission ||
@@ -96,6 +109,7 @@ export function InventoryContent() {
     setSearch("");
     setFilterYear("");
     setFilterMake("");
+    setFilterModel("");
     setFilterBody("");
     setFilterMileage("");
     setFilterTransmission("");
@@ -108,6 +122,7 @@ export function InventoryContent() {
       if (!v.floor && !v.sold) return false; // hide non-floor, non-sold
       if (filterYear && v.productionYear !== parseInt(filterYear)) return false;
       if (filterMake && v.makeName !== filterMake) return false;
+      if (filterModel && v.modelName !== filterModel) return false;
       if (filterBody && v.bodyType !== filterBody) return false;
       if (filterTransmission && v.transmissionType !== filterTransmission)
         return false;
@@ -166,6 +181,7 @@ export function InventoryContent() {
     sortBy,
     filterYear,
     filterMake,
+    filterModel,
     filterBody,
     filterMileage,
     filterTransmission,
@@ -216,7 +232,7 @@ export function InventoryContent() {
 
         {/* Filter dropdowns */}
         <div className="mb-4 rounded-xl border border-border/60 bg-card p-2.5 sm:p-4">
-          <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
+          <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-4 sm:gap-3 lg:grid-cols-7">
             <select
               value={filterYear}
               onChange={(e) => setFilterYear(e.target.value)}
@@ -232,11 +248,24 @@ export function InventoryContent() {
 
             <select
               value={filterMake}
-              onChange={(e) => setFilterMake(e.target.value)}
+              onChange={(e) => { setFilterMake(e.target.value); setFilterModel(""); }}
               className={selectClass}
             >
               <option value="">All Makes</option>
               {uniqueMakes.map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={filterModel}
+              onChange={(e) => setFilterModel(e.target.value)}
+              className={selectClass}
+            >
+              <option value="">{filterMake ? `All ${filterMake} Models` : "All Models"}</option>
+              {uniqueModels.map((m) => (
                 <option key={m} value={m}>
                   {m}
                 </option>

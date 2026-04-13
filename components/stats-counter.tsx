@@ -111,7 +111,11 @@ export function InventorySearch() {
   };
 
   const handleSearch = () => {
-    router.push("/inventory");
+    const params = new URLSearchParams();
+    if (make) params.set("make", make);
+    if (model) params.set("model", model);
+    if (year) params.set("year", year);
+    router.push(`/inventory${params.toString() ? `?${params}` : ""}`);
   };
 
   return (

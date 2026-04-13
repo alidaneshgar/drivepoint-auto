@@ -1,6 +1,5 @@
 import { Hero } from "@/components/hero";
 import { InventorySearch } from "@/components/stats-counter";
-import { FeaturedVehicles } from "@/components/featured-vehicles";
 import { RecentVehicles } from "@/components/recent-vehicles";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { GoogleReviews } from "@/components/google-reviews";
@@ -17,7 +16,6 @@ export default function HomePage() {
       <Hero />
       <InventorySearch />
       <RecentVehicles />
-      <FeaturedVehicles />
       <WhyChooseUs />
       <CtaBanner />
       <GoogleReviews />
