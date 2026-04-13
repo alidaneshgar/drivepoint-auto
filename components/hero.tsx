@@ -6,9 +6,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
-  Shield,
-  DollarSign,
-  Star,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -205,32 +202,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div className="h-[2px] bg-black/10 sm:h-[3px]">
-        <div
-          className="h-full bg-accent transition-none"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
 
-      {/* Trust badges — stacked on mobile */}
-      <div className="bg-primary">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-4 px-4 py-3 sm:gap-8 sm:py-4 md:px-6">
-          {[
-            { icon: Shield, text: "Fully Inspected" },
-            { icon: DollarSign, text: "Fair Pricing" },
-            { icon: Star, text: "Trusted Dealer" },
-          ].map(({ icon: Icon, text }) => (
-            <div
-              key={text}
-              className="flex items-center gap-1.5 text-xs text-white/80 sm:text-sm"
-            >
-              <Icon className="h-3.5 w-3.5 text-accent sm:h-4 sm:w-4" />
-              <span>{text}</span>
-            </div>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

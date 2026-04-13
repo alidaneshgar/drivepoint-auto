@@ -1,5 +1,5 @@
 import { Hero } from "@/components/hero";
-import { StatsCounter } from "@/components/stats-counter";
+import { InventorySearch } from "@/components/stats-counter";
 import { FeaturedVehicles } from "@/components/featured-vehicles";
 import { RecentVehicles } from "@/components/recent-vehicles";
 import { WhyChooseUs } from "@/components/why-choose-us";
@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <div className="pt-[calc(2.25rem+73px)]">
       <Hero />
-      <StatsCounter />
+      <InventorySearch />
       <RecentVehicles />
       <FeaturedVehicles />
       <WhyChooseUs />
