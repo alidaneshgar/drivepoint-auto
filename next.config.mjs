@@ -12,6 +12,20 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/home",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/vehicleInfo/:vin",
+        destination: "/inventory",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
