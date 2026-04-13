@@ -38,8 +38,8 @@ export function FinancingCalculator({
 }) {
   const [price, setPrice] = useState(defaultPrice?.toString() || "");
   const [downPayment, setDownPayment] = useState("0");
-  const [rate, setRate] = useState("");
-  const [term, setTerm] = useState("");
+  const [rate, setRate] = useState("6.99");
+  const [term, setTerm] = useState("5");
   const [frequency, setFrequency] = useState("1");
   const [result, setResult] = useState<{
     paymentAmount: number;
