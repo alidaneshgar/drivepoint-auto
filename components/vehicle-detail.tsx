@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -106,6 +106,8 @@ export function VehicleDetail({ slug }: { slug: string }) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [showRequestInfo, setShowRequestInfo] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   useEffect(() => {
     const vin = vinFromSlug(slug);
@@ -353,7 +355,18 @@ export function VehicleDetail({ slug }: { slug: string }) {
             {pics.length > 0 ? (
               <div className="space-y-2 overflow-hidden sm:space-y-3">
                 {/* Main image — constrained height on mobile */}
-                <div className="relative overflow-hidden rounded-xl bg-muted sm:rounded-2xl">
+                <div
+                  className="relative overflow-hidden rounded-xl bg-muted sm:rounded-2xl"
+                  onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+                  onTouchMove={(e) => { touchEndX.current = e.touches[0].clientX; }}
+                  onTouchEnd={() => {
+                    const diff = touchStartX.current - touchEndX.current;
+                    if (Math.abs(diff) > 50) {
+                      if (diff > 0 && selectedImage < pics.length - 1) setSelectedImage(selectedImage + 1);
+                      if (diff < 0 && selectedImage > 0) setSelectedImage(selectedImage - 1);
+                    }
+                  }}
+                >
                   <Image
                     src={pics[selectedImage]}
                     alt={`${title} - photo ${selectedImage + 1}`}
