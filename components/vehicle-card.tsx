@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Gauge, Fuel, Settings2 } from "lucide-react";
 import { numberWithCommas, vehicleSlug } from "@/lib/utils";
 import type { Vehicle } from "@/lib/types/vehicle";
 
@@ -24,10 +23,6 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             className="w-full h-auto"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-          {/* Badges */}
           {vehicle.websiteBadge && (
             <Badge className="absolute left-3 top-3 rounded-lg bg-accent shadow-md">
               {vehicle.websiteBadge}
@@ -47,42 +42,87 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
               </span>
             </div>
           )}
-
-          {/* Price tag */}
-          {!vehicle.sold && vehicle.floor && (
-            <div className="absolute bottom-3 right-3 rounded-lg bg-white/95 px-3 py-1.5 text-lg font-bold text-foreground shadow-lg backdrop-blur-sm">
-              ${numberWithCommas(vehicle.askingPrice)}
-            </div>
-          )}
         </div>
 
-        {/* Info */}
+        {/* Body */}
         <div className="flex flex-1 flex-col p-4">
-          <h3 className="mb-0.5 text-lg font-bold text-foreground transition-colors group-hover:text-accent">
+          {/* Title */}
+          <h3 className="mb-0.5 text-base font-bold text-foreground transition-colors group-hover:text-accent sm:text-lg">
             {title}
           </h3>
           <p className="mb-3 min-h-[1.25rem] text-sm text-muted-foreground">
             {vehicle.trim || "\u00A0"}
           </p>
 
-          {/* Specs pills */}
-          <div className="mt-auto flex flex-wrap gap-2 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1 rounded-md bg-muted/70 px-2 py-1">
-              <Gauge className="h-3 w-3" />
-              {numberWithCommas(vehicle.mileage)} km
-            </span>
+          {/* Specs table */}
+          <div className="mb-3 space-y-1 text-xs text-muted-foreground">
+            {vehicle.bodyType && (
+              <div className="flex justify-between">
+                <span>Body Style:</span>
+                <span className="font-medium text-foreground">{vehicle.bodyType}</span>
+              </div>
+            )}
+            {vehicle.drivetrainType && (
+              <div className="flex justify-between">
+                <span>Drivetrain:</span>
+                <span className="font-medium text-foreground">{vehicle.drivetrainType}</span>
+              </div>
+            )}
+            {vehicle.engine && (
+              <div className="flex justify-between">
+                <span>Engine:</span>
+                <span className="font-medium text-foreground">{vehicle.engine} L</span>
+              </div>
+            )}
             {vehicle.transmissionType && (
-              <span className="inline-flex items-center gap-1 rounded-md bg-muted/70 px-2 py-1">
-                <Settings2 className="h-3 w-3" />
-                {vehicle.transmissionType}
-              </span>
+              <div className="flex justify-between">
+                <span>Transmission:</span>
+                <span className="font-medium text-foreground">{vehicle.transmissionType}</span>
+              </div>
             )}
-            {vehicle.fuelType && (
-              <span className="inline-flex items-center gap-1 rounded-md bg-muted/70 px-2 py-1">
-                <Fuel className="h-3 w-3" />
-                {vehicle.fuelType}
-              </span>
+            <div className="flex justify-between">
+              <span>Mileage:</span>
+              <span className="font-medium text-foreground">{numberWithCommas(vehicle.mileage)} km</span>
+            </div>
+            {vehicle.color && (
+              <div className="flex justify-between">
+                <span>Exterior Color:</span>
+                <span className="font-medium text-foreground">{vehicle.color}</span>
+              </div>
             )}
+            {vehicle.stockNumber && (
+              <div className="flex justify-between">
+                <span>Stock Number:</span>
+                <span className="font-medium text-foreground">{vehicle.stockNumber}</span>
+              </div>
+            )}
+            <div className="flex justify-between">
+              <span>VIN Number:</span>
+              <span className="font-medium text-foreground text-[10px]">{vehicle.vin}</span>
+            </div>
+          </div>
+
+          {/* Price + Carfax */}
+          <div className="mt-auto flex items-end justify-between border-t border-border/40 pt-3">
+            <div>
+              <div className="text-xl font-bold text-foreground sm:text-2xl">
+                {vehicle.sold
+                  ? "SOLD"
+                  : !vehicle.floor
+                    ? "Coming Soon"
+                    : `$${numberWithCommas(vehicle.askingPrice)}`}
+              </div>
+              {!vehicle.sold && vehicle.floor && (
+                <p className="text-[10px] text-muted-foreground">Plus Tax & Fees</p>
+              )}
+            </div>
+            <Image
+              src="/images/carfax.png"
+              alt="CARFAX"
+              width={60}
+              height={20}
+              className="h-5 w-auto opacity-70"
+            />
           </div>
         </div>
       </div>
