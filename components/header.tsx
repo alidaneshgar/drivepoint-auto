@@ -40,13 +40,18 @@ export function Header() {
       {/* Top contact bar */}
       <div className="fixed top-0 left-0 right-0 z-[60] h-9 bg-primary text-primary-foreground">
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 text-xs md:px-6">
-          <a
-            href={`tel:${dealership.phone.replace(/[^+\d]/g, "")}`}
-            className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
-          >
-            <Phone className="h-3 w-3" />
-            {dealership.phone}
-          </a>
+          <div className="flex items-center gap-3 sm:gap-4">
+            <a
+              href={`tel:${dealership.phone.replace(/[^+\d]/g, "")}`}
+              className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
+            >
+              <Phone className="h-3 w-3" />
+              {dealership.phone}
+            </a>
+            <span className="hidden opacity-70 lg:inline">
+              {dealership.address}, {dealership.city}, {dealership.province}
+            </span>
+          </div>
           <span className="hidden opacity-70 sm:block">
             Mon-Fri 10-18 &middot; Sat 10-17 &middot; Sun 11-16
           </span>
