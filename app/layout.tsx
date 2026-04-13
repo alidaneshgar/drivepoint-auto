@@ -56,6 +56,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} scroll-smooth`}>
+      <head>
+        <meta name="format-detection" content="telephone=yes" />
+      </head>
       <body className="font-sans antialiased">
         <StructuredData
           data={{

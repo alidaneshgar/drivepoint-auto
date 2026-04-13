@@ -41,8 +41,9 @@ export default function TeamPage() {
             here for you.
           </p>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Visit us at 819 Brunette Ave, Coquitlam, or give us a call at
-            (604) 213-2322. We look forward to helping you find your next car.
+            Visit us at 819 Brunette Ave, Coquitlam, or give us a call at{" "}
+            <a href="tel:6042132322" className="text-accent hover:underline">(604) 213-2322</a>.
+            We look forward to helping you find your next car.
           </p>
         </div>
       </section>
