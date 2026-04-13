@@ -11,7 +11,7 @@ export function WhyChooseUs() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section className="py-20 sm:py-24" ref={ref}>
+    <section className="py-10 sm:py-20" ref={ref}>
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="mb-14 text-center">
           <motion.p

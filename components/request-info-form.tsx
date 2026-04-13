@@ -23,9 +23,11 @@ type FormData = z.infer<typeof schema>;
 
 export function RequestInfoForm({
   vehicleId,
+  vehicleTitle,
   onSuccess,
 }: {
   vehicleId: number;
+  vehicleTitle?: string;
   onSuccess?: () => void;
 }) {
   const [submitted, setSubmitted] = useState(false);
@@ -43,7 +45,13 @@ export function RequestInfoForm({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...data, vehicleId }),
+        body: JSON.stringify({
+          ...data,
+          vehicleId,
+          message: vehicleTitle
+            ? `I am interested in the ${vehicleTitle} (ID: ${vehicleId}). Please send me more information.`
+            : `I am interested in vehicle ID: ${vehicleId}. Please send me more information.`,
+        }),
       });
       if (!res.ok) throw new Error("Failed");
       setSubmitted(true);
@@ -66,6 +74,11 @@ export function RequestInfoForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+      {vehicleTitle && (
+        <div className="rounded-lg bg-muted/50 px-3 py-2 text-sm text-muted-foreground">
+          Inquiring about: <span className="font-medium text-foreground">{vehicleTitle}</span>
+        </div>
+      )}
       <div className="space-y-1.5">
         <Label htmlFor="firstName">First Name *</Label>
         <Input id="firstName" placeholder="John" {...register("firstName")} />

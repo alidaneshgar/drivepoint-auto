@@ -46,18 +46,20 @@ function Modal({
 }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 backdrop-blur-sm sm:items-center sm:p-4">
-      <div className="relative w-full max-w-md rounded-t-2xl bg-white p-5 shadow-xl sm:rounded-2xl sm:p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-bold">{title}</h3>
-          <button
-            onClick={onClose}
-            className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-          >
-            <X className="h-5 w-5" />
-          </button>
+    <div className="fixed inset-0 z-[100] overflow-y-auto bg-black/50 backdrop-blur-sm">
+      <div className="flex min-h-full items-center justify-center p-4">
+        <div className="relative w-full max-w-md rounded-2xl bg-white p-5 shadow-xl sm:p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-lg font-bold">{title}</h3>
+            <button
+              onClick={onClose}
+              className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          {children}
         </div>
-        {children}
       </div>
     </div>
   );
@@ -259,7 +261,7 @@ export function VehicleDetail({ slug }: { slug: string }) {
 
       {/* Modals */}
       <Modal open={showRequestInfo} onClose={() => setShowRequestInfo(false)} title="Request More Info">
-        <RequestInfoForm vehicleId={vehicle.id} onSuccess={() => setTimeout(() => setShowRequestInfo(false), 2000)} />
+        <RequestInfoForm vehicleId={vehicle.id} vehicleTitle={title} onSuccess={() => setTimeout(() => setShowRequestInfo(false), 2000)} />
       </Modal>
       <Modal open={showShare} onClose={() => setShowShare(false)} title="Email to a Friend">
         <ShareVehicleForm vehicleId={vehicle.id} onSuccess={() => setTimeout(() => setShowShare(false), 2000)} />
@@ -347,9 +349,9 @@ export function VehicleDetail({ slug }: { slug: string }) {
       <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:py-10">
         <div className="grid gap-6 lg:grid-cols-3 lg:gap-10">
           {/* Left — gallery + description */}
-          <div className="lg:col-span-2">
+          <div className="min-w-0 lg:col-span-2">
             {pics.length > 0 ? (
-              <div className="space-y-2 sm:space-y-3">
+              <div className="space-y-2 overflow-hidden sm:space-y-3">
                 {/* Main image — constrained height on mobile */}
                 <div className="relative overflow-hidden rounded-xl bg-muted sm:rounded-2xl">
                   <Image

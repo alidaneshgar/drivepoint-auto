@@ -26,10 +26,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16">
+      <section className="py-10 sm:py-16">
         <div className="mx-auto max-w-3xl px-4 md:px-6">
-          <h2 className="mb-6 text-2xl font-bold">Our Mission</h2>
-          <p className="text-lg leading-relaxed text-muted-foreground">
+          <h2 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">Our Mission</h2>
+          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
             {mission}
           </p>
         </div>

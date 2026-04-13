@@ -44,7 +44,7 @@ type SortKey =
   | "mileage-desc";
 
 const selectClass =
-  "h-10 w-full rounded-lg border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring";
+  "h-9 w-full rounded-lg border border-border bg-background px-2 text-xs sm:h-10 sm:px-3 sm:text-sm focus:outline-none focus:ring-2 focus:ring-ring";
 
 export function InventoryContent() {
   const { vehicles, loading, error } = useVehicles();
@@ -201,7 +201,7 @@ export function InventoryContent() {
               placeholder="Search by make, model, year, color..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="h-11 rounded-xl border-border bg-card pl-10 text-base"
+              className="h-9 rounded-xl border-border bg-card pl-10 text-sm sm:h-11 sm:text-base"
             />
             {search && (
               <button
@@ -215,8 +215,8 @@ export function InventoryContent() {
         </div>
 
         {/* Filter dropdowns */}
-        <div className="mb-4 rounded-xl border border-border/60 bg-card p-4">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="mb-4 rounded-xl border border-border/60 bg-card p-2.5 sm:p-4">
+          <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
             <select
               value={filterYear}
               onChange={(e) => setFilterYear(e.target.value)}
@@ -297,7 +297,7 @@ export function InventoryContent() {
           </div>
 
           {/* Sort + sold toggle + clear */}
-          <div className="mt-3 flex flex-col items-start justify-between gap-3 border-t border-border/40 pt-3 sm:flex-row sm:items-center">
+          <div className="mt-2 flex flex-col items-start justify-between gap-2 border-t border-border/40 pt-2 sm:mt-3 sm:flex-row sm:items-center sm:gap-3 sm:pt-3">
             <div className="flex items-center gap-4">
               <select
                 value={sortBy}

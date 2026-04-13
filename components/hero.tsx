@@ -162,17 +162,17 @@ export function Hero() {
         {/* Nav arrows — hidden on very small screens */}
         <button
           onClick={prev}
-          className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/20 p-1.5 text-white/50 backdrop-blur-sm transition-all hover:bg-black/40 hover:text-white sm:left-4 sm:p-2.5"
+          className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/20 p-2.5 text-white/50 backdrop-blur-sm transition-all hover:bg-black/40 hover:text-white hidden sm:flex"
           aria-label="Previous slide"
         >
-          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
         <button
           onClick={next}
-          className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/20 p-1.5 text-white/50 backdrop-blur-sm transition-all hover:bg-black/40 hover:text-white sm:right-4 sm:p-2.5"
+          className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/20 p-2.5 text-white/50 backdrop-blur-sm transition-all hover:bg-black/40 hover:text-white hidden sm:flex"
           aria-label="Next slide"
         >
-          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+          <ChevronRight className="h-5 w-5" />
         </button>
 
         {/* Bottom: counter only on mobile, dots on desktop */}

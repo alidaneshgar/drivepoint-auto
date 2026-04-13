@@ -7,6 +7,7 @@ import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { StructuredData } from "@/components/structured-data";
 import { dealership, siteMetadata } from "@/lib/data/dealership";
 import { Toaster } from "sonner";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -87,6 +88,7 @@ export default function RootLayout({
             ],
           }}
         />
+        <ScrollToTop />
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
