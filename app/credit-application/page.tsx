@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { CreditApplicationForm } from "@/components/credit-application-form";
 
 export const metadata: Metadata = {
-  title: "Apply for Auto Financing | Drive Point Auto",
+  title: "Credit Application | Auto Financing in Coquitlam | Drive Point Auto",
   description:
-    "Apply for car financing online at Drive Point Auto. Quick approval, competitive rates, and flexible terms in Coquitlam, BC.",
+    "Apply for car financing online at Drive Point Auto in Coquitlam, BC. We work with multiple lenders to explore options for your situation.",
   alternates: { canonical: "/credit-application" },
 };
 

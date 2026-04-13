@@ -117,9 +117,9 @@ export function Hero() {
                 transition={{ delay: 0.3 }}
                 className="mb-2 text-xl font-extrabold leading-[1.15] text-white drop-shadow-lg sm:text-3xl sm:mb-3 md:text-4xl lg:text-5xl"
               >
-                Find Your{" "}
+                Quality Used Cars in{" "}
                 <span className="bg-gradient-to-r from-white via-blue-200 to-blue-300 bg-clip-text text-transparent">
-                  Perfect Ride
+                  Coquitlam, BC
                 </span>
               </motion.h1>
 

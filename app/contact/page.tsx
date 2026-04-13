@@ -4,7 +4,7 @@ import { pageMetadata, dealership, workingHours } from "@/lib/data/dealership";
 import { ContactForm } from "@/components/contact-form";
 
 export const metadata: Metadata = {
-  title: pageMetadata.contact.title,
+  title: "Contact Drive Point Auto | Used Car Dealer in Coquitlam, BC",
   description: pageMetadata.contact.description,
   alternates: { canonical: "/contact" },
 };

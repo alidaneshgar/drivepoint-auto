@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Users } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Meet Our Team | Drive Point Auto",
+  title: "Meet the Drive Point Auto Team | Coquitlam Car Dealership",
   description:
-    "Meet the dedicated team at Drive Point Auto. Our knowledgeable staff is here to help you find your perfect vehicle.",
+    "Meet the dedicated team at Drive Point Auto in Coquitlam, BC. Our knowledgeable staff is here to help you find your perfect vehicle.",
   alternates: { canonical: "/team" },
 };
 

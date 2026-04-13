@@ -3,8 +3,8 @@ import { pageMetadata } from "@/lib/data/dealership";
 import { InventoryContent } from "@/components/inventory-content";
 
 export const metadata: Metadata = {
-  title: pageMetadata.inventory.title,
-  description: pageMetadata.inventory.description,
+  title: "Used Cars for Sale in Coquitlam, BC | Drive Point Auto",
+  description: "Shop our full inventory of quality used cars, trucks, and SUVs in Coquitlam, BC. Filter by make, model, year, and price. Financing available at Drive Point Auto.",
   alternates: { canonical: "/inventory" },
 };
 

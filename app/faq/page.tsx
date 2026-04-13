@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/data/dealership";
 import { FaqSection } from "@/components/faq-section";
 
 export const metadata: Metadata = {
-  title: pageMetadata.faq.title,
+  title: "FAQ About Buying Used Cars in Coquitlam | Drive Point Auto",
   description: pageMetadata.faq.description,
   alternates: { canonical: "/faq" },
 };

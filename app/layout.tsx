@@ -86,6 +86,27 @@ export default function RootLayout({
               { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday"], opens: "10:00", closes: "17:00" },
               { "@type": "OpeningHoursSpecification", dayOfWeek: ["Sunday"], opens: "11:00", closes: "16:00" },
             ],
+            areaServed: {
+              "@type": "GeoCircle",
+              geoMidpoint: {
+                "@type": "GeoCoordinates",
+                latitude: dealership.latitude,
+                longitude: dealership.longitude,
+              },
+              geoRadius: "50000",
+            },
+            contactPoint: {
+              "@type": "ContactPoint",
+              telephone: dealership.phone,
+              contactType: "Sales",
+              availableLanguage: "English",
+            },
+            sameAs: [
+              dealership.facebookUrl,
+              dealership.instagramUrl,
+            ].filter(Boolean),
+            currenciesAccepted: "CAD",
+            paymentAccepted: "Cash, Credit Card, Financing",
           }}
         />
         <ScrollToTop />
