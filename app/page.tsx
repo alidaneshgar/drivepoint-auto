@@ -18,7 +18,7 @@ export default function HomePage() {
 
       {/* Welcome */}
       <section className="py-10 sm:py-14">
-        <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
           <h2 className="mb-4 text-xl font-bold sm:text-2xl">
             Welcome to Drive Point Auto
           </h2>
