@@ -1,6 +1,7 @@
 import { Hero } from "@/components/hero";
 import { InventorySearch } from "@/components/stats-counter";
 import { RecentVehicles } from "@/components/recent-vehicles";
+import { welcomeMessage } from "@/lib/data/dealership";
 import { GoogleReviews } from "@/components/google-reviews";
 import { CtaBanner } from "@/components/cta-banner";
 import { ContactForm } from "@/components/contact-form";
@@ -14,6 +15,21 @@ export default function HomePage() {
     <div className="pt-[calc(2.25rem+73px)]">
       <Hero />
       <InventorySearch />
+
+      {/* Welcome */}
+      <section className="py-10 sm:py-14">
+        <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
+          <h2 className="mb-4 text-xl font-bold sm:text-2xl">
+            Welcome to Drive Point Auto
+          </h2>
+          <div className="space-y-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {welcomeMessage.split("\n").map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <RecentVehicles />
       <CtaBanner />
       <GoogleReviews />
