@@ -3,12 +3,11 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
-import { useVehicles } from "@/hooks/use-vehicles";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { numberWithCommas, vehicleSlug } from "@/lib/utils";
+import type { Vehicle } from "@/lib/types/vehicle";
 
-export function RecentVehicles() {
-  const { vehicles, loading } = useVehicles();
+export function RecentVehicles({ vehicles }: { vehicles: Vehicle[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -45,16 +44,6 @@ export function RecentVehicles() {
       behavior: "smooth",
     });
   };
-
-  if (loading) {
-    return (
-      <section className="py-16">
-        <div className="flex justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-        </div>
-      </section>
-    );
-  }
 
   if (recent.length === 0) return null;
 

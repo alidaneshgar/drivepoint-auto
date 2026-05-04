@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { dealership } from "@/lib/data/dealership";
-import { getVehicleByVinServer } from "@/lib/api/vehicles-server";
+import { getVehiclesServer } from "@/lib/api/vehicles-server";
 import { VehicleDetail } from "@/components/vehicle-detail";
 import { numberWithCommas, vinFromSlug, vehicleSlug } from "@/lib/utils";
 
@@ -9,7 +10,8 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const vin = vinFromSlug(slug);
-  const vehicle = await getVehicleByVinServer(vin);
+  const vehicles = await getVehiclesServer();
+  const vehicle = vehicles.find((v) => v.vin.toUpperCase() === vin.toUpperCase());
 
   if (!vehicle) {
     return {
@@ -25,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = `${vehicle.condition || "Used"} ${title} - ${numberWithCommas(vehicle.mileage)} km, ${price}. ${vehicle.transmissionType || ""} ${vehicle.drivetrainType || ""}. Available at ${dealership.name} in ${dealership.city}, ${dealership.province}.`.trim();
 
   return {
-    title: `${title} - ${price} | ${dealership.name}`,
+    title: `${title} - ${price}`,
     description,
     alternates: { canonical: `/inventory/${vehicleSlug(vehicle)}` },
     openGraph: {
@@ -47,5 +49,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function VehicleDetailPage({ params }: Props) {
   const { slug } = await params;
-  return <VehicleDetail slug={slug} />;
+  const vin = vinFromSlug(slug);
+  const allVehicles = await getVehiclesServer();
+  const vehicle = allVehicles.find((v) => v.vin.toUpperCase() === vin.toUpperCase());
+
+  if (!vehicle) notFound();
+
+  return <VehicleDetail vehicle={vehicle} allVehicles={allVehicles} />;
 }

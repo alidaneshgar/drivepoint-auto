@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Search, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useVehicles } from "@/hooks/use-vehicles";
+import type { Vehicle } from "@/lib/types/vehicle";
 
 function SelectField({
   value,
@@ -38,9 +38,8 @@ function SelectField({
   );
 }
 
-export function InventorySearch() {
+export function InventorySearch({ vehicles }: { vehicles: Vehicle[] }) {
   const router = useRouter();
-  const { vehicles } = useVehicles();
   const available = useMemo(
     () => vehicles.filter((v) => v.floor && !v.sold),
     [vehicles]

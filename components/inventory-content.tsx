@@ -2,11 +2,11 @@
 
 import { useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import { Loader2, Search, X, RotateCcw } from "lucide-react";
+import { Search, X, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { VehicleCard } from "@/components/vehicle-card";
-import { useVehicles } from "@/hooks/use-vehicles";
+import type { Vehicle } from "@/lib/types/vehicle";
 
 const mileageOptions = [
   { label: "< 10,000 km", value: 10000 },
@@ -47,8 +47,7 @@ type SortKey =
 const selectClass =
   "h-9 w-full rounded-lg border border-border bg-background px-2 text-xs sm:h-10 sm:px-3 sm:text-sm focus:outline-none focus:ring-2 focus:ring-ring";
 
-export function InventoryContent() {
-  const { vehicles, loading, error } = useVehicles();
+export function InventoryContent({ vehicles }: { vehicles: Vehicle[] }) {
   const searchParams = useSearchParams();
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<SortKey>("recently-arrived");
@@ -188,23 +187,6 @@ export function InventoryContent() {
     filterPrice,
     hideSold,
   ]);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-3 py-24">
-        <Loader2 className="h-8 w-8 animate-spin text-accent" />
-        <p className="text-sm text-muted-foreground">Loading inventory...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <p className="py-24 text-center text-lg text-muted-foreground">
-        Unable to load inventory. Please try again later.
-      </p>
-    );
-  }
 
   return (
     <section className="py-8 sm:py-10">

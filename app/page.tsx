@@ -6,15 +6,18 @@ import { GoogleReviews } from "@/components/google-reviews";
 import { CtaBanner } from "@/components/cta-banner";
 import { ContactForm } from "@/components/contact-form";
 import { dealership } from "@/lib/data/dealership";
+import { getVehiclesServer } from "@/lib/api/vehicles-server";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const vehicles = await getVehiclesServer();
+
   return (
     <div className="pt-[calc(2.25rem+73px)]">
       <Hero />
-      <InventorySearch />
+      <InventorySearch vehicles={vehicles} />
 
       {/* Welcome */}
       <section className="py-10 sm:py-14">
@@ -37,7 +40,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <RecentVehicles />
+      <RecentVehicles vehicles={vehicles} />
       <CtaBanner />
       <GoogleReviews />
 

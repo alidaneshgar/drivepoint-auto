@@ -7,12 +7,9 @@ import useEmblaCarousel from "embla-carousel-react";
 import {
   ArrowLeft,
   Phone,
-  Mail,
   Gauge,
   Fuel,
   Settings2,
-  Car,
-  Loader2,
   Share2,
   MessageSquare,
   ChevronLeft,
@@ -28,11 +25,8 @@ import { ShareVehicleForm } from "@/components/share-vehicle-form";
 import { FinancingCalculator } from "@/components/financing-calculator";
 import { VehicleCard } from "@/components/vehicle-card";
 import { dealership } from "@/lib/data/dealership";
-import { numberWithCommas, vinFromSlug, vehicleSlug } from "@/lib/utils";
+import { numberWithCommas, vehicleSlug } from "@/lib/utils";
 import type { Vehicle } from "@/lib/types/vehicle";
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://dms.sysandgo.com/api";
 
 function Modal({
   open,
@@ -99,11 +93,13 @@ function parseAdSettings(
   return items;
 }
 
-export function VehicleDetail({ slug }: { slug: string }) {
-  const [vehicle, setVehicle] = useState<Vehicle | null>(null);
-  const [allVehicles, setAllVehicles] = useState<Vehicle[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+export function VehicleDetail({
+  vehicle,
+  allVehicles,
+}: {
+  vehicle: Vehicle;
+  allVehicles: Vehicle[];
+}) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [showRequestInfo, setShowRequestInfo] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -128,32 +124,7 @@ export function VehicleDetail({ slug }: { slug: string }) {
     [emblaApi]
   );
 
-  useEffect(() => {
-    const vin = vinFromSlug(slug);
-    fetch(`${API_URL}/vehicles/inventorySearch`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-    })
-      .then((res) => res.json())
-      .then((data: Vehicle[]) => {
-        setAllVehicles(data);
-        const found = data.find(
-          (v) => v.vin.toUpperCase() === vin.toUpperCase()
-        );
-        if (found) {
-          setVehicle(found);
-          document.title = `${found.productionYear} ${found.makeName} ${found.modelName} ${found.trim || ""} | ${dealership.name}`.trim();
-        } else {
-          setNotFound(true);
-        }
-      })
-      .catch(() => setNotFound(true))
-      .finally(() => setLoading(false));
-  }, [slug]);
-
   const similarVehicles = useMemo(() => {
-    if (!vehicle) return [];
     return allVehicles
       .filter(
         (v) =>
@@ -165,38 +136,12 @@ export function VehicleDetail({ slug }: { slug: string }) {
       .slice(0, 4);
   }, [vehicle, allVehicles]);
 
-  const currentIndex = useMemo(() => {
-    if (!vehicle) return -1;
-    return allVehicles.findIndex((v) => v.id === vehicle.id);
-  }, [vehicle, allVehicles]);
-
+  const currentIndex = allVehicles.findIndex((v) => v.id === vehicle.id);
   const prevVehicle = currentIndex > 0 ? allVehicles[currentIndex - 1] : null;
   const nextVehicle =
     currentIndex >= 0 && currentIndex < allVehicles.length - 1
       ? allVehicles[currentIndex + 1]
       : null;
-
-  if (loading) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center pt-28">
-        <Loader2 className="h-8 w-8 animate-spin text-accent" />
-      </div>
-    );
-  }
-
-  if (notFound || !vehicle) {
-    return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center pt-28 text-center px-4">
-        <h1 className="mb-4 text-2xl font-bold">Vehicle Not Found</h1>
-        <p className="mb-6 text-muted-foreground">
-          This vehicle may have been sold or removed from our inventory.
-        </p>
-        <Button asChild>
-          <Link href="/inventory">Browse Inventory</Link>
-        </Button>
-      </div>
-    );
-  }
 
   const title =
     `${vehicle.productionYear} ${vehicle.makeName} ${vehicle.modelName} ${vehicle.trim || ""}`.trim();
