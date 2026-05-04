@@ -6,7 +6,7 @@ const API_URL =
   process.env.NEXT_PUBLIC_API_URL || "https://dms.sysandgo.com/api";
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.drivepointauto.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://drivepointauto.ca";
 
 export const dynamic = "force-dynamic";
 

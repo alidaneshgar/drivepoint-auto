@@ -20,12 +20,19 @@ export default function HomePage() {
       <section className="py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <h2 className="mb-4 text-xl font-bold sm:text-2xl">
-            Welcome to Drive Point Auto
+            Your Trusted Used Car Dealership in Coquitlam, BC
           </h2>
           <div className="space-y-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
             {welcomeMessage.split("\n").map((p, i) => (
               <p key={i}>{p}</p>
             ))}
+            <p>
+              Drive Point Auto is conveniently located at 819 Brunette Ave in Coquitlam, BC,
+              proudly serving customers across the Tri-Cities and Metro Vancouver — including
+              Port Coquitlam, Port Moody, Burnaby, New Westminster, Surrey, Maple Ridge, Pitt Meadows,
+              Langley, Richmond, and Vancouver. Whether you&apos;re searching for a used car, truck,
+              or SUV near you, our friendly team is here to help you find the right vehicle at the right price.
+            </p>
           </div>
         </div>
       </section>

@@ -114,7 +114,7 @@ export function Hero() {
                 transition={{ delay: 0.3 }}
                 className="mb-2 text-xl font-extrabold leading-[1.15] text-white drop-shadow-lg sm:text-3xl sm:mb-3 md:text-4xl lg:text-5xl"
               >
-                Quality Used Cars in{" "}
+                Used Cars for Sale in{" "}
                 <span className="bg-gradient-to-r from-white via-blue-200 to-blue-300 bg-clip-text text-transparent">
                   Coquitlam, BC
                 </span>
@@ -126,7 +126,7 @@ export function Hero() {
                 transition={{ delay: 0.4 }}
                 className="mb-3 text-xs leading-relaxed text-white/70 sm:text-sm sm:mb-5 lg:text-lg"
               >
-                Quality pre-owned vehicles, hand-picked and fully inspected.
+                Quality pre-owned vehicles serving Coquitlam, Port Coquitlam, Port Moody, Burnaby, and Metro Vancouver.
               </motion.p>
 
               <motion.div

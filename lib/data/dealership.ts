@@ -7,7 +7,7 @@ export const dealership = {
   country: "CA",
   phone: "(604) 213-2322",
   email: "sales@drivepointauto.ca",
-  url: "https://www.drivepointauto.com",
+  url: "https://drivepointauto.ca",
   latitude: 49.23656251166729,
   longitude: -122.87448070238862,
   facebookUrl: "",
@@ -16,22 +16,22 @@ export const dealership = {
 } as const;
 
 export const siteMetadata = {
-  title: "Drive Point Auto - Quality Used Cars in Coquitlam, BC",
+  title: "Used Cars for Sale in Coquitlam, BC | Drive Point Auto",
   description:
-    "Browse quality pre-owned vehicles at Drive Point Auto in Coquitlam. Financing available, trade-ins welcome. Visit us today!",
+    "Shop quality used cars, trucks, and SUVs for sale in Coquitlam, BC. Drive Point Auto serves the Tri-Cities and Metro Vancouver with honest pricing, financing, and trade-ins.",
   ogImage: "/images/og-image.jpg",
 } as const;
 
 export const pageMetadata = {
   home: {
-    title: "Drive Point Auto - Quality Used Cars in Coquitlam, BC",
+    title: "Used Cars for Sale in Coquitlam, BC | Drive Point Auto",
     description:
-      "Browse quality pre-owned vehicles at Drive Point Auto in Coquitlam. Financing available, trade-ins welcome. Visit us today!",
+      "Looking for used cars for sale in Coquitlam? Drive Point Auto offers quality pre-owned vehicles, financing, and trade-ins. Serving Coquitlam, Port Moody, Burnaby, and Metro Vancouver.",
   },
   inventory: {
-    title: "Used Cars for Sale | Drive Point Auto",
+    title: "Used Cars for Sale in Coquitlam, BC | Inventory",
     description:
-      "Shop our full inventory of used cars, trucks, and SUVs in Coquitlam, BC. Filter by make, model, year, and price. Financing available.",
+      "Browse used cars, trucks, and SUVs for sale at Drive Point Auto in Coquitlam, BC. Filter by make, model, year, and price. Financing and trade-ins welcome.",
   },
   contact: {
     title: "Contact Drive Point Auto | Coquitlam, BC",
