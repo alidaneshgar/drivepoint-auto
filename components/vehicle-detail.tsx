@@ -179,6 +179,9 @@ export function VehicleDetail({
           "@context": "https://schema.org",
           "@type": "Vehicle",
           name: title,
+          description:
+            vehicle.adBodyText?.trim() ||
+            `${vehicle.condition || "Used"} ${title} for sale at ${dealership.name} in ${dealership.city}, ${dealership.province}. ${numberWithCommas(vehicle.mileage)} km${vehicle.transmissionType ? `, ${vehicle.transmissionType}` : ""}${vehicle.drivetrainType ? `, ${vehicle.drivetrainType}` : ""}.`,
           brand: { "@type": "Brand", name: vehicle.makeName },
           model: vehicle.modelName,
           modelDate: String(vehicle.productionYear),
@@ -209,6 +212,15 @@ export function VehicleDetail({
               : "https://schema.org/InStock",
             url: `${dealership.url}/inventory/${canonicalSlug}`,
             seller: { "@type": "AutoDealer", name: dealership.name },
+            hasMerchantReturnPolicy: {
+              "@type": "MerchantReturnPolicy",
+              applicableCountry: dealership.country,
+              returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+            },
+            shippingDetails: {
+              "@type": "OfferShippingDetails",
+              doesNotShip: true,
+            },
           },
           image: pics[0],
         }}
