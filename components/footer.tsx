@@ -107,8 +107,29 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Service areas */}
+        <div className="mt-12 border-t border-white/10 pt-8">
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-white/40">
+            Service Areas
+          </h3>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60">
+            <Link href="/used-cars-port-moody" className="hover:text-white">
+              Used Cars in Port Moody
+            </Link>
+            <Link href="/used-cars-burnaby" className="hover:text-white">
+              Used Cars in Burnaby
+            </Link>
+            <Link href="/used-cars-new-westminster" className="hover:text-white">
+              Used Cars in New Westminster
+            </Link>
+            <Link href="/inventory" className="hover:text-white">
+              Used Cars in Coquitlam
+            </Link>
+          </div>
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
           <p className="text-xs text-white/40">
             &copy; {new Date().getFullYear()} {dealership.name}. All rights
             reserved.

@@ -32,9 +32,21 @@ export default async function HomePage() {
             <p>
               Drive Point Auto is conveniently located at 819 Brunette Ave in Coquitlam, BC,
               proudly serving customers across the Tri-Cities and Metro Vancouver — including
-              Port Coquitlam, Port Moody, Burnaby, New Westminster, Surrey, Maple Ridge, Pitt Meadows,
-              Langley, Richmond, and Vancouver. Whether you&apos;re searching for a used car, truck,
-              or SUV near you, our friendly team is here to help you find the right vehicle at the right price.
+              Port Coquitlam,{" "}
+              <Link href="/used-cars-port-moody" className="font-medium text-accent underline-offset-2 hover:underline">
+                Port Moody
+              </Link>
+              ,{" "}
+              <Link href="/used-cars-burnaby" className="font-medium text-accent underline-offset-2 hover:underline">
+                Burnaby
+              </Link>
+              ,{" "}
+              <Link href="/used-cars-new-westminster" className="font-medium text-accent underline-offset-2 hover:underline">
+                New Westminster
+              </Link>
+              , Surrey, Maple Ridge, Pitt Meadows, Langley, Richmond, and Vancouver.
+              Whether you&apos;re searching for a used car, truck, or SUV near you, our friendly team
+              is here to help you find the right vehicle at the right price.
             </p>
           </div>
         </div>

@@ -25,7 +25,7 @@ import { ShareVehicleForm } from "@/components/share-vehicle-form";
 import { FinancingCalculator } from "@/components/financing-calculator";
 import { VehicleCard } from "@/components/vehicle-card";
 import { dealership } from "@/lib/data/dealership";
-import { numberWithCommas, vehicleSlug } from "@/lib/utils";
+import { numberWithCommas, slugify, vehicleSlug } from "@/lib/utils";
 import type { Vehicle } from "@/lib/types/vehicle";
 
 function Modal({
@@ -232,7 +232,19 @@ export function VehicleDetail({
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: dealership.url },
             { "@type": "ListItem", position: 2, name: "Inventory", item: `${dealership.url}/inventory` },
-            { "@type": "ListItem", position: 3, name: title, item: `${dealership.url}/inventory/${canonicalSlug}` },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: `Used ${vehicle.makeName}`,
+              item: `${dealership.url}/used-cars/${slugify(vehicle.makeName)}`,
+            },
+            {
+              "@type": "ListItem",
+              position: 4,
+              name: `Used ${vehicle.makeName} ${vehicle.modelName}`,
+              item: `${dealership.url}/used-cars/${slugify(vehicle.makeName)}/${slugify(vehicle.modelName)}`,
+            },
+            { "@type": "ListItem", position: 5, name: title, item: `${dealership.url}/inventory/${canonicalSlug}` },
           ],
         }}
       />
@@ -248,6 +260,25 @@ export function VehicleDetail({
       {/* Header */}
       <section className="bg-gradient-to-br from-primary to-[oklch(0.40_0.14_240)] py-4 text-primary-foreground sm:py-6">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <nav className="mb-2 hidden text-xs text-white/60 sm:block sm:text-sm">
+            <Link href="/" className="hover:text-white">Home</Link>
+            <span className="mx-1.5">/</span>
+            <Link href="/inventory" className="hover:text-white">Inventory</Link>
+            <span className="mx-1.5">/</span>
+            <Link
+              href={`/used-cars/${slugify(vehicle.makeName)}`}
+              className="hover:text-white"
+            >
+              Used {vehicle.makeName}
+            </Link>
+            <span className="mx-1.5">/</span>
+            <Link
+              href={`/used-cars/${slugify(vehicle.makeName)}/${slugify(vehicle.modelName)}`}
+              className="hover:text-white"
+            >
+              {vehicle.modelName}
+            </Link>
+          </nav>
           <div className="mb-3 flex items-center justify-between">
             <Link
               href="/inventory"
@@ -279,7 +310,7 @@ export function VehicleDetail({
           </div>
           <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <h1 className="text-lg font-extrabold tracking-tight sm:text-2xl lg:text-3xl">
-              {title}
+              {title} for Sale in {dealership.city}, {dealership.province}
             </h1>
             <div className="flex items-baseline gap-2 sm:text-right">
               <span className="text-xl font-extrabold sm:text-2xl lg:text-3xl">
@@ -338,7 +369,7 @@ export function VehicleDetail({
                         <div key={i} className="min-w-0 flex-[0_0_100%]">
                           <Image
                             src={pic}
-                            alt={`${title} - photo ${i + 1}`}
+                            alt={`${title} for sale at ${dealership.name} in ${dealership.city}, ${dealership.province} — photo ${i + 1} of ${pics.length}`}
                             width={1200}
                             height={800}
                             className="w-full h-auto max-h-[50vh] object-contain sm:max-h-none"
@@ -379,7 +410,7 @@ export function VehicleDetail({
                             : "opacity-50 hover:opacity-100"
                         } transition-all`}
                       >
-                        <Image src={pic} alt={`Thumbnail ${i + 1}`} fill className="object-cover" sizes="80px" />
+                        <Image src={pic} alt={`${title} thumbnail ${i + 1}`} fill className="object-cover" sizes="80px" />
                       </button>
                     ))}
                   </div>

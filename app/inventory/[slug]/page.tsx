@@ -24,14 +24,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const price = vehicle.sold
     ? "SOLD"
     : `$${numberWithCommas(vehicle.askingPrice)}`;
-  const description = `${vehicle.condition || "Used"} ${title} - ${numberWithCommas(vehicle.mileage)} km, ${price}. ${vehicle.transmissionType || ""} ${vehicle.drivetrainType || ""}. Available at ${dealership.name} in ${dealership.city}, ${dealership.province}.`.trim();
+  const description = `${vehicle.condition || "Used"} ${title} for sale in ${dealership.city}, ${dealership.province} — ${numberWithCommas(vehicle.mileage)} km, ${price}. ${vehicle.transmissionType || ""} ${vehicle.drivetrainType || ""}. Available now at ${dealership.name}.`.trim();
+  const seoTitle = `${title} for Sale in ${dealership.city}, ${dealership.province} - ${price}`;
 
   return {
-    title: `${title} - ${price}`,
+    title: seoTitle,
     description,
     alternates: { canonical: `/inventory/${vehicleSlug(vehicle)}` },
     openGraph: {
-      title: `${title} - ${price}`,
+      title: seoTitle,
       description,
       images: vehicle.vehiclePictures?.[0]
         ? [{ url: vehicle.vehiclePictures[0], width: 1200, height: 800 }]
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} - ${price}`,
+      title: seoTitle,
       description,
       images: vehicle.vehiclePictures?.[0] ? [vehicle.vehiclePictures[0]] : [],
     },

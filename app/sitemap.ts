@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { vehicleSlug } from "@/lib/utils";
+import { slugify, vehicleSlug } from "@/lib/utils";
+import { citySlugs } from "@/lib/data/cities";
 import type { Vehicle } from "@/lib/types/vehicle";
 
 const API_URL =
@@ -22,14 +23,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/team`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
   ];
 
+  const cityPages: MetadataRoute.Sitemap = citySlugs.map((slug) => ({
+    url: `${BASE_URL}/used-cars-${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
   try {
     const res = await fetch(`${API_URL}/vehicles/inventorySearch`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
     });
-    if (!res.ok) return staticPages;
+    if (!res.ok) return [...staticPages, ...cityPages];
     const vehicles: Vehicle[] = await res.json();
+    const inStock = vehicles.filter((v) => v.floor && !v.sold);
+
     const vehiclePages: MetadataRoute.Sitemap = vehicles
       .filter((v) => v.floor)
       .map((v) => ({
@@ -38,8 +48,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "daily" as const,
         priority: 0.8,
       }));
-    return [...staticPages, ...vehiclePages];
+
+    const makes = new Set<string>();
+    const makeModels = new Set<string>();
+    for (const v of inStock) {
+      if (!v.makeName) continue;
+      const makeSlug = slugify(v.makeName);
+      makes.add(makeSlug);
+      if (v.modelName) {
+        makeModels.add(`${makeSlug}/${slugify(v.modelName)}`);
+      }
+    }
+
+    const makePages: MetadataRoute.Sitemap = Array.from(makes).map((m) => ({
+      url: `${BASE_URL}/used-cars/${m}`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.7,
+    }));
+
+    const modelPages: MetadataRoute.Sitemap = Array.from(makeModels).map(
+      (mm) => ({
+        url: `${BASE_URL}/used-cars/${mm}`,
+        lastModified: new Date(),
+        changeFrequency: "daily" as const,
+        priority: 0.7,
+      })
+    );
+
+    return [
+      ...staticPages,
+      ...cityPages,
+      ...makePages,
+      ...modelPages,
+      ...vehiclePages,
+    ];
   } catch {
-    return staticPages;
+    return [...staticPages, ...cityPages];
   }
 }
